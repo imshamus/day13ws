@@ -33,22 +33,27 @@ public class ContactController {
     {
         // List<Contact> contacts = contactService.getAllContact();
 
+        // Add existing contacts to the model
         model.addAttribute("contacts", contactService.getAllContact());
-        model.addAttribute("contact", new Contact());
         return "list";
     }
 
-    @PostMapping("/list")
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("contact", new Contact());
+        return "addForm";
+    }
+    
+    @PostMapping("/add")
     public String postNewContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult) throws ParseException {
 
+        // Handle validation errors
         if (bindingResult.hasErrors()) {
-            return "/list";
+            return "addform"; // return form with errors
         }
         
-        List<Contact> contacts = contactService.getAllContact();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        
-        contacts.add(contact);        
+        // Add the new contact
+        contactService.addContact(contact);      
         
         return "redirect:/contacts/list";
     }

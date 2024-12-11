@@ -15,8 +15,9 @@ public class ContactRepo {
 
     private List<Contact> contacts = new ArrayList<>();
 
+    // Public repo constructor for initial values
     public ContactRepo() throws ParseException {
-        
+
         // Add initial contacts
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         contacts.add(new Contact("Sheryl", "sheryl@moe.sg", "98889999", sdf.parse("1999-01-02")));

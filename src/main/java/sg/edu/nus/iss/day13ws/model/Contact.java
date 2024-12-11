@@ -25,9 +25,9 @@ public class Contact {
     @Pattern(regexp = "(8|9)[0-9]{7}", message = "Phone number must starts with 8 or 9 follow by 7 digits")
     private String phoneNumber;
 
-    // @Past(message = "Date must be in the past.")
-    // @NotNull(message = "Date must not be null.")
-    // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past(message = "Date must be in the past.")
+    @NotNull(message = "Date must not be null.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
 
     public Contact() {
