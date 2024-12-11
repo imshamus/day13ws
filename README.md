@@ -2,6 +2,7 @@
 
 if no jar
 mvn spring-boot:run -Dspring-boot.run.arguments="--dataDir=/Users/your-username/tmp/data"
+mvn spring-boot:run -Dspring-boot.run.arguments="--dataDir=/Users/shamus/tmp/data"
 
 
 
