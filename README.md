@@ -12,3 +12,5 @@ java -jar target/day13ws-0.0.1-SNAPSHOT.jar --dataDir /Users/your-username/tmp/d
 java -jar <name of jar file> --dataDir=“/users/sarahchan/Desktop/workshop 13” 
 quotes if got space in file names
 no quotes if no space
+
+ilsk
