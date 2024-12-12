@@ -33,6 +33,86 @@ public class ContactService {
         contactRepo.addContact(contact);
     }
 
+    public boolean isYounger(Contact contact)
+    {
+        Date contactDob = contact.getDob();
+        LocalDate contactDobLocal = contactDob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate date10YearsAgo = currentDate.minusYears(10);
+
+        System.out.println("Contact DOB LocalDate: " + contactDobLocal);
+        System.out.println("Date 10 Years Ago: " + date10YearsAgo);
+
+        boolean isYounger = contactDobLocal.isAfter(date10YearsAgo);
+        System.out.println("Is Younger Than 10: " + isYounger);
+        
+        return isYounger; // true if younger
+    }
+
+    public boolean isOlder(Contact contact)
+    {
+        Date contactDob = contact.getDob();
+        LocalDate contactDobLocal = contactDob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDate currentDate = LocalDate.now();
+        
+        int yearsDifference = Period.between(contactDobLocal, currentDate).getYears();
+
+        if (yearsDifference > 100)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    
+
+
+
+
+
+    public void printDate()
+    {
+        // toInstant() - Converts a Date object to an Instant.
+        Date date = new Date();
+        System.out.println(date); // Prints current date and time
+        Instant instant = date.toInstant();
+        System.out.println(instant); // e.g., 2024-12-12T14:00:00Z
+
+        // atZone() - Takes the Instant (which is in UTC) and applies the system's default time zone to it, creating a ZonedDateTime.
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        System.out.println(zonedDateTime); // e.g., 2024-12-12T22:00+08:00[Asia/Singapore]
+
+        // toLocalDate() - Extracts just the date (year, month, day) from the ZonedDateTime, ignoring the time and time zone. returns a LocalDate object
+        LocalDate localDate = zonedDateTime.toLocalDate();
+        System.out.println(localDate); // e.g., 2024-12-12
+
+        // minusYears(10) - Subtracts 10 years from the given LocalDate. Returns a new LocalDate instance (since LocalDate is immutable).
+        LocalDate date10YearsAgo = LocalDate.now().minusYears(10);
+        System.out.println(date10YearsAgo); // e.g., 2014-12-12
+
+        // Period.between() - Calculates the difference between two LocalDate objects in terms of years, months, and days.
+        LocalDate startDate = LocalDate.of(2000, 1, 1);
+        LocalDate endDate = LocalDate.of(2020, 1, 1);
+        Period period = Period.between(startDate, endDate);
+        System.out.println(period.getYears()); // 20 years
+
+        // getYears() - Extracts the year component of a Period.
+        int yearsDifference = Period.between(startDate, endDate).getYears();
+        System.out.println(yearsDifference); // 20
+
+        // isAfter() - Checks if one LocalDate is after another LocalDate.
+        // Returns true if the first date is later than the second date.
+
+        LocalDate today = LocalDate.now();
+        LocalDate pastDate = LocalDate.of(2000, 1, 1);
+        System.out.println(today.isAfter(pastDate)); // true
+
+    }
+
     public void checkDate(Contact contact)
     {
         Date contactDob = contact.getDob();
@@ -110,91 +190,6 @@ public class ContactService {
             // System.out.printf("%s is %d years older than 10.\n", contact.getName(), yearsDifference);
             System.out.printf("%s is %d years older than 10.\n", contact.getName(), Math.abs(yearsDifference));
         }
-    }
-
-
-
-
-
-
-
-    public boolean isYounger(Contact contact)
-    {
-        Date contactDob = contact.getDob();
-        LocalDate contactDobLocal = contactDob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        LocalDate currentDate = LocalDate.now();
-        LocalDate date10YearsAgo = currentDate.minusYears(10);
-
-        System.out.println("Contact DOB LocalDate: " + contactDobLocal);
-        System.out.println("Date 10 Years Ago: " + date10YearsAgo);
-
-        boolean isYounger = contactDobLocal.isAfter(date10YearsAgo);
-        System.out.println("Is Younger Than 10: " + isYounger);
-        
-        return isYounger; // true if younger
-    }
-
-    public boolean isOlder(Contact contact)
-    {
-        Date contactDob = contact.getDob();
-        LocalDate contactDobLocal = contactDob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        LocalDate currentDate = LocalDate.now();
-        
-        int yearsDifference = Period.between(contactDobLocal, currentDate).getYears();
-
-        if (yearsDifference > 100)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-
-
-
-
-
-
-    public void printDate()
-    {
-        // toInstant() - Converts a Date object to an Instant.
-        Date date = new Date();
-        System.out.println(date); // Prints current date and time
-        Instant instant = date.toInstant();
-        System.out.println(instant); // e.g., 2024-12-12T14:00:00Z
-
-        // atZone() - Takes the Instant (which is in UTC) and applies the system's default time zone to it, creating a ZonedDateTime.
-        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-        System.out.println(zonedDateTime); // e.g., 2024-12-12T22:00+08:00[Asia/Singapore]
-
-        // toLocalDate() - Extracts just the date (year, month, day) from the ZonedDateTime, ignoring the time and time zone. returns a LocalDate object
-        LocalDate localDate = zonedDateTime.toLocalDate();
-        System.out.println(localDate); // e.g., 2024-12-12
-
-        // minusYears(10) - Subtracts 10 years from the given LocalDate. Returns a new LocalDate instance (since LocalDate is immutable).
-        LocalDate date10YearsAgo = LocalDate.now().minusYears(10);
-        System.out.println(date10YearsAgo); // e.g., 2014-12-12
-
-        // Period.between() - Calculates the difference between two LocalDate objects in terms of years, months, and days.
-        LocalDate startDate = LocalDate.of(2000, 1, 1);
-        LocalDate endDate = LocalDate.of(2020, 1, 1);
-        Period period = Period.between(startDate, endDate);
-        System.out.println(period.getYears()); // 20 years
-
-        // getYears() - Extracts the year component of a Period.
-        int yearsDifference = Period.between(startDate, endDate).getYears();
-        System.out.println(yearsDifference); // 20
-
-        // isAfter() - Checks if one LocalDate is after another LocalDate.
-        // Returns true if the first date is later than the second date.
-
-        LocalDate today = LocalDate.now();
-        LocalDate pastDate = LocalDate.of(2000, 1, 1);
-        System.out.println(today.isAfter(pastDate)); // true
-
     }
 }
 
