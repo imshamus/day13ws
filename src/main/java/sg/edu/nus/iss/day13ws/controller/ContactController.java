@@ -57,6 +57,18 @@ public class ContactController {
         
         return "redirect:/contacts/list";
     }
+
+    @GetMapping("/test")
+    public void testMethod() 
+    {
+        List<Contact> contacts = contactService.getAllContact();
+
+        for (Contact c : contacts)
+        {
+            contactService.checkDate2(c);
+        }
+    }
+    
     
     
     
