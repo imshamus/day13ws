@@ -42,7 +42,34 @@
                 <input type="date" class="form-control" name="dob" th:field="*{dob}"  placeholder="Enter DOB" />
                 <p class = "text-danger" data-th-if="${#fields.hasErrors('dob')}" data-th-errors = "*{dob}">
                 </p>
+                <!-- Global Error Section -->
+
+                <!-- Display global errors here -->
+                <div th:if="${#fields.hasGlobalErrors()}">
+                    <p class="text-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                </div>
+
+                <!-- <div th:if="${#fields.hasGlobalErrors()}">
+                    <div th:each="err : ${#fields.globalErrors()}">
+                        <p class="text-danger" th:text="${err}"></p>
+                    </div>
+                </div> -->
+                
+                
             </div>
+
+            <!-- Global Error Section -->
+            <!-- <div th:if="${#fields.hasErrors('global')}">
+                <ul>
+                    <li class="text-danger" th:each="err : ${#fields.errors('global')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div> -->
+            
+            
+
+            
 
             <button type="submit" class="btn btn-primary">Add Contact</button>
         </form>

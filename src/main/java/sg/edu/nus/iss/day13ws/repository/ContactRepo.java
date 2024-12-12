@@ -22,7 +22,7 @@ public class ContactRepo {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         contacts.add(new Contact("Sheryl", "sheryl@moe.sg", "98889999", sdf.parse("1999-01-02")));
         contacts.add(new Contact("Shamsu", "shamsu@g.com", "88888888", sdf.parse("1996-07-09")));
-        contacts.add(new Contact("random", "rand@g.com", "97862543", sdf.parse("2023-07-09")));
+        // contacts.add(new Contact("random", "rand@g.com", "97862543", sdf.parse("2023-07-09")));
     }
 
     public List<Contact> getContacts() {

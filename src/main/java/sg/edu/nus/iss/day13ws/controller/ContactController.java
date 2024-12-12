@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,29 +46,62 @@ public class ContactController {
         return "addForm";
     }
     
-    @PostMapping("/add")
-    public String postNewContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult) throws ParseException {
+    // @PostMapping("/add")
+    // public String postNewContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult) {
+    // if (bindingResult.hasErrors()) {
+    //     return "addform"; // Return form with errors
+    // }
 
-        // Handle validation errors
-        if (bindingResult.hasErrors()) {
-            return "addform"; // return form with errors
+    // if (contactService.isYounger(contact)) {
+    //     ObjectError error = new ObjectError("globalError", "%s is too young.".formatted(contact.getName()));
+    //     bindingResult.addError(error);
+    //     return "addform"; // Return form with global error
+    // }
+
+    // contactService.addContact(contact);
+    // return "redirect:/contacts/list";
+    // }
+
+    @PostMapping("/add")
+    public String postNewContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult) {
+
+        
+        // Simulate a global error for testing
+        if (contactService.isYounger(contact)) {
+            //ObjectError error = new ObjectError("globalError", String.format("%s is too young.", contact.getName()));
+            ObjectError error = new ObjectError("globalError", "%s is too young".formatted(contact.getName()));
+            bindingResult.addError(error);
         }
-        
-        // Add the new contact
-        contactService.addContact(contact);      
-        
-        return "redirect:/contacts/list";
-    }
+
+        if (contactService.isOlder(contact))
+        {
+            ObjectError error = new ObjectError("globalError", "%s is too old".formatted(contact.getName()));
+            bindingResult.addError(error);
+        }
+
+        if (bindingResult.hasErrors())
+        {
+            return "addform"; // Return form with errors
+        }
+
+    return "addform";
+}
+
+
 
     @GetMapping("/test")
-    public void testMethod() 
+    // public ResponseEntity<String> testMethod() 
+    public ResponseEntity<List<Contact>> testMethod() 
     {
         List<Contact> contacts = contactService.getAllContact();
 
         for (Contact c : contacts)
         {
-            contactService.checkDate2(c);
+            contactService.checkDate3(c);
         }
+
+        // return ResponseEntity.ok("Test successful!"); // Sends plain text "Test successful!" as the response
+        return ResponseEntity.ok(contacts);
     }
     
     
